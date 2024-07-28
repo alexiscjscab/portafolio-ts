@@ -1,11 +1,10 @@
-import React from 'react';
+import { createContext } from 'react';
 
 interface MyContextProps {
-  state: string;
-  updateState: (newState: string) => void;
+  language?: string;
+  changeLanguage: (lng: string) => void;
 }
-
 // Proporciona un valor por defecto para el contexto
-const MyContext = React.createContext<MyContextProps | undefined>(undefined);
+const MyContext = createContext<MyContextProps | undefined>(undefined);
 
 export default MyContext;

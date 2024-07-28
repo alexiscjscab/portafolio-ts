@@ -41,8 +41,8 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
 
   &:hover {
     animation: ${hoverAnimation} 2s linear forwards;
-    color: ${({ variant }) => (variant === "dark" ? "#222222" : "#00CFFF")};
-    border-color: ${({ variant }) => (variant === "dark" ? "#222222" : "#00CFFF")};
+    color: ${({ variant }) => (variant === "dark" ? "#fafafa" : "#00CFFF")};
+    border-color: ${({ variant }) => (variant === "dark" ? "#fafafa" : "#00CFFF")};
   }
 `;
 

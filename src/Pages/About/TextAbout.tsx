@@ -1,17 +1,23 @@
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const TextAbout = styled.div`
   font-size: 16px;
   line-height: 1.6;
-  color: #000;
+  color: #fafafa;
   max-width: 600px;
   margin: 0 auto;
+  @media (max-width: 300px) {
+    display: none;
+  }
 `;
 
 export const TextAboutMe = () => {
+  const { t } = useTranslation();
+
   return (
     <TextAbout>
-      Soy desarrollador web con dos años de experiencia en frontend utilizando React, Node y TypeScript. Disfruto de los desafíos creativos y la colaboración en equipo con metodologías Scrum. Actualmente, trabajo en el área de Comex del Banco Galicia, participando en diversos proyectos.
+      {t('aboutMeText')}
     </TextAbout>
   );
 };

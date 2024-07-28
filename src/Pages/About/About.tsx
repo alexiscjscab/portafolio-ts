@@ -1,14 +1,24 @@
 import styled, { keyframes } from "styled-components";
 import TypedName from "./NameAnimated";
 import { TextAboutMe } from "./TextAbout";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import IconButton from "../../components/Buttons/IconButton";
+import MyContext from "../../context/Context";
+import { useTranslation } from 'react-i18next';
 
 // Contenedor principal
 const AboutContainer = styled.section`
   display: flex;
   justify-content: center;
   padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 // Animación del borde
@@ -39,9 +49,10 @@ const borderAnimation = keyframes`
 const Card = styled.div`
   display: flex;
   align-items: center;
-  width: 80%;
+  justify-content: center;
+  width: 100%;
   max-width: 800px;
-  height: auto;
+  min-height: 300px; // Altura mínima para evitar que el card se reduzca demasiado
   border: 3px solid #007bff;
   border-radius: 10px;
   padding: 20px;
@@ -62,13 +73,16 @@ const Card = styled.div`
 
   &:hover {
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
-    /* transform: perspective(800px) rotateY(-10deg); */
   }
 `;
 
 // Estilo del contenedor de texto
 const TextDiv = styled.div`
   width: 100%;
+
+  @media (max-width: 300px) {
+    display: none;
+  }
 `;
 
 const fadeIn = keyframes`
@@ -127,8 +141,13 @@ const CenteredDiv = styled.div`
 const StyledTypedName = styled(TypedName)``;
 
 const About = () => {
-  const arrayTexto: string[] = ["Alexis Beas", "Front Developer"];
-  const [active, setActive] = useState<boolean>(false);
+  const { t } = useTranslation();
+  const { language } = useContext(MyContext) || {};
+  const [txt, setTxt] = useState<string[]>([]);
+
+  useEffect(() => {
+    setTxt([t('frontDeveloper'), t('alexisBeas')]);
+  }, [language, t]);
 
   return (
     <AboutContainer>
@@ -137,17 +156,17 @@ const About = () => {
           <TextDiv>
             <NameContainer>
               <StyledTypedName
-                texto={arrayTexto}
+                texto={txt}
                 speed={100}
                 size={"18px"}
-                setActive={setActive}
-                active={active}
+                setActive={() => {}}
+                active={false}
               />
             </NameContainer>
             <TextAboutMe />
           </TextDiv>
           <CenteredDiv>
-            <IconButton onClick={() => {}} text="Descargar" />
+            <IconButton onClick={() => {}} text={t('download')} />
           </CenteredDiv>
         </ColumnDiv>
       </Card>

@@ -1,19 +1,22 @@
 import { useState, ReactNode } from 'react';
 import MyContext from './Context';
+import { useTranslation } from 'react-i18next';
 
 interface MyProviderProps {
   children: ReactNode;
 }
 
 const MyProvider = ({ children }: MyProviderProps) => {
-  const [state, setState] = useState('Valor inicial');
+  const { i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
 
-  const updateState = (newState: string) => {
-    setState(newState);
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setLanguage(lng);
   };
 
   return (
-    <MyContext.Provider value={{ state, updateState }}>
+    <MyContext.Provider value={{ changeLanguage, language }}>
       {children}
     </MyContext.Provider>
   );
