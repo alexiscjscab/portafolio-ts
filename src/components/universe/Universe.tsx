@@ -36,9 +36,9 @@ const getRandom = (min: number, max: number) =>
 const Comet: React.FC = () => {
   const cometRef = useRef<THREE.Mesh>(null);
   const size = useMemo(() => getRandom(0.1, 0.5), []);
-  const speed = useMemo(() => getRandom(0.05, 0.2), []);
+  const speed = useMemo(() => getRandom(0.3, 4), []);
   const position = useMemo<[number, number, number]>(
-    () => [getRandom(-20, 20), getRandom(5, 10), getRandom(-20, 20)],
+    () => [getRandom(-40, 40), getRandom(-40, 40), getRandom(-40, 40),],
     []
   );
 
@@ -57,9 +57,9 @@ const Comet: React.FC = () => {
       new THREE.MeshStandardMaterial({
         color: "rgba(100,50,100,0.5)",
         map: textureMeteorito,
-        emissive: new THREE.Color("orange"),
-        emissiveIntensity: 1.5,
-        metalness: 0.5,
+        emissive: new THREE.Color("brown"),
+        emissiveIntensity: 1.2,
+        metalness: 0.8,
         roughness: 0.5,
       }),
     []
@@ -67,7 +67,7 @@ const Comet: React.FC = () => {
 
   return (
     <mesh ref={cometRef} position={position} material={material}>
-      <sphereGeometry args={[size, 32, 32]} />
+      <sphereGeometry args={[size, 80, 80]} />
     </mesh>
   );
 };
@@ -79,9 +79,8 @@ const Sun: React.FC = () => {
   const sunMaterial = useMemo(() => {
     return new THREE.MeshStandardMaterial({
       map: textureSol,
-      emissive: new THREE.Color("yellow"),
-      emissiveIntensity: 1,
-      roughness: 100,
+      emissive: new THREE.Color("#f84"),
+      emissiveIntensity: 0.666
     });
   }, []);
 
@@ -198,10 +197,11 @@ const Orbit: React.FC<{ radius: number }> = ({ radius }) => {
   const orbitMaterial = useMemo(
     () =>
       new THREE.MeshBasicMaterial({
-        color: new THREE.Color("white"),
-        opacity: 0.5,
+        color: new THREE.Color('rgba(20,255,180,0.9)'),
+        opacity: 1.2,
         transparent: true,
         side: THREE.DoubleSide,
+        name:'orbit'
       }),
     []
   );
@@ -221,10 +221,10 @@ const StarryBackground: React.FC = () => {
       <Canvas style={{ width: "100vw", height: "100vh" }}>
         <ambientLight intensity={0.2} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <pointLight position={[10, 10, 10]} intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={0.9} />
         <Stars
           radius={200}
-          count={5000}
+          count={50000}
           factor={4}
           saturation={0.5}
           fade
