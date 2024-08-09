@@ -12,7 +12,7 @@ export const Orbit: React.FC<{ radius: number }> = ({ radius }) => {
   );
 
   const orbitGeometry = useMemo(
-    () => new THREE.RingGeometry(radius, radius + 0.1, 64),
+    () => new THREE.RingGeometry(radius, radius + 0.4, 64),
     [radius]
   );
 

@@ -11,7 +11,7 @@ i18n.use(initReactI18next).init({
         alexisBeas: "Alexis Beas",
         download: "Download",
         aboutMeText: "I am a web developer with two years of experience in frontend using React, Node, and TypeScript. I enjoy creative challenges and team collaboration using Scrum methodologies. Currently, I work in the Comex area of Banco Galicia, participating in various projects.",
-        contact: 'Contact',
+        universe: 'Universe',
         about: 'About'
       }
     },
@@ -23,7 +23,7 @@ i18n.use(initReactI18next).init({
         alexisBeas: "Alexis Beas",
         download: "Descargar",
         aboutMeText: "Soy desarrollador web con dos años de experiencia en frontend utilizando React, Node y TypeScript. Disfruto de los desafíos creativos y la colaboración en equipo con metodologías Scrum. Actualmente, trabajo en el área de Comex del Banco Galicia, participando en diversos proyectos.",
-        contact: 'Contacto',
+        universe: 'Universo',
         about: 'Sobre mi'
       }
     }

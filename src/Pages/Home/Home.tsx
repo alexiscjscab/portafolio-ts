@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { FaGlobe } from "react-icons/fa"; 
-import Contact from "../Universe/Universe";
+import Universe from "../Universe/Universe";
 import MyContext from "../../context/Context";
 import About from "../About/About";
 import { useTranslation } from "react-i18next";
@@ -75,7 +75,7 @@ const LanguageSwitcher = styled.button`
 const Content = styled.div`
 `;
 
-type PagesProps = "About" | "Contact";
+type PagesProps = "About" | "Universe";
 
 const Home: React.FC<HomeProps> = () => {
   const [pages, setPages] = useState<PagesProps>("About");
@@ -94,10 +94,10 @@ const Home: React.FC<HomeProps> = () => {
             {t('about')}
           </NavItem>
           <NavItem
-            active={pages === "Contact"}
-            onClick={() => setPages("Contact")}
+            active={pages === "Universe"}
+            onClick={() => setPages("Universe")}
           >
-            {t('contact')}
+            {t('universe')}
           </NavItem>
         </NavItems>  
         <LanguageSwitcher onClick={() => changeLanguage && changeLanguage(language === "en" ? "es" : "en")}>
@@ -106,7 +106,7 @@ const Home: React.FC<HomeProps> = () => {
       </Navbar>
       <Content>
         {pages === "About" && <About />}
-        {pages === "Contact" && <Contact />}
+        {pages === "Universe" && <Universe />}
       </Content>
     </HomeContainer>
   );

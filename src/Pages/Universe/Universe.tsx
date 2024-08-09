@@ -1,6 +1,6 @@
 import StarryBackground from "../../components/SistemaSolar/Universe";
 
-const Contact = () => {
+const Universe = () => {
   return (
     <div>
       <StarryBackground />
@@ -8,4 +8,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Universe;
