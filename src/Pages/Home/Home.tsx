@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import { FaGlobe } from "react-icons/fa"; // Importar el icono de globo
-import Contact from "../Contact/Contact";
-import MyContext from "../../context/Context"; // Asegúrate de ajustar la ruta según sea necesario
+import { FaGlobe } from "react-icons/fa"; 
+import Contact from "../Universe/Universe";
+import MyContext from "../../context/Context";
 import About from "../About/About";
 import { useTranslation } from "react-i18next";
 
@@ -73,7 +73,6 @@ const LanguageSwitcher = styled.button`
 
 // Estilo para el contenido principal que se muestra debajo del navbar
 const Content = styled.div`
-  margin-top: 60px;
 `;
 
 type PagesProps = "About" | "Contact";
