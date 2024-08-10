@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { IconType, IconBaseProps } from "react-icons";
+import MyContext from "../../context/Context";
 
 interface ButtonStyledProps {
   variant?: "dark" | "light";
@@ -23,7 +24,7 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
   cursor: pointer;
   transition: color 0.3s, border-color 0.3s;
   background-color: transparent;
-  color: ${({ variant }) => (variant === "dark" ? "#00CFFF" : "#222222")};
+  color: ${({ variant }) => (variant === "dark" ? "#fafafa" : "#222222")};
   display: flex;
   align-items: center;
   outline: none;
@@ -41,7 +42,7 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
 
   &:hover {
     animation: ${hoverAnimation} 2s linear forwards;
-    color: ${({ variant }) => (variant === "dark" ? "#fafafa" : "#00CFFF")};
+    /* color: ${({ variant }) => (variant === "dark" ? "#fafafa" : "#00CFFF")}; */
     border-color: ${({ variant }) => (variant === "dark" ? "#fafafa" : "#00CFFF")};
   }
 `;
@@ -64,16 +65,22 @@ const IconButton: React.FC<ThemeToggleButtonProps> = ({
   icon,
   text,
   iconPosition = "left",
-  variant = "dark",
-}) => (
-  <ButtonStyled onClick={onClick} aria-label={text} variant={variant}>
-    {icon && (
-      <IconWrapper position={iconPosition}>
-        {React.createElement(icon, { size: 16 } as IconBaseProps)}
-      </IconWrapper>
-    )}
-    {text}
-  </ButtonStyled>
-);
+  variant,
+}) => {
+  const { theme } = useContext(MyContext) || {}; // Obtén el tema actual desde el contexto
+
+  const buttonVariant = variant || theme; // Usa el tema actual si no se pasa una variante
+
+  return (
+    <ButtonStyled onClick={onClick} aria-label={text} variant={buttonVariant}>
+      {icon && (
+        <IconWrapper position={iconPosition}>
+          {React.createElement(icon, { size: 16 } as IconBaseProps)}
+        </IconWrapper>
+      )}
+      {text}
+    </ButtonStyled>
+  );
+};
 
 export default IconButton;

@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import Typed from "typed.js";
+import MyContext from "../../context/Context"; // Asegúrate de importar tu contexto
 
 interface TypedNameProps {
   texto: string[];
   speed: number;
   size: string;
-  setActive: any;
+  setActive: (active: boolean) => void;
   active: boolean;
 }
 
@@ -16,24 +17,23 @@ const TypedName: React.FC<TypedNameProps> = ({
   setActive,
   active,
 }) => {
+  const {theme} = useContext(MyContext) || {}
   const typedRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    // if (!active) {
     if (typedRef.current) {
       const typedOptions = {
         strings: texto,
-        typeSpeed: speed, // Aumenta la velocidad de escritura
-        loop: true, // se repite
-        startDelay: 250, // Agrega un retraso antes de iniciar la animación
-        showCursor: false, // Muestra el cursor de escritura
-        // cursorChar: '|', // Carácter del cursor
-        smartBackspace: true, // Retroceso inteligente
-        backSpeed: 50, // Velocidad de retroceso
-        fadeOut: true, // Desvanecimiento al final de la animación
-        fadeOutClass: "typed-fade-out", // Clase CSS para el desvanecimiento
-        fadeOutDelay: 500, // Retraso antes de desvanecer
-        onComplete: () => setActive(true), // Función a ejecutar al completarse la animación
+        typeSpeed: speed,
+        loop: true,
+        startDelay: 250,
+        showCursor: false,
+        smartBackspace: true,
+        backSpeed: 50,
+        fadeOut: true,
+        fadeOutClass: "typed-fade-out",
+        fadeOutDelay: 500,
+        onComplete: () => setActive(true),
       };
 
       const typed = new Typed(typedRef.current, typedOptions);
@@ -42,8 +42,10 @@ const TypedName: React.FC<TypedNameProps> = ({
         typed.destroy();
       };
     }
-    // }
-  }, [texto, active]);
+  }, [texto, active, setActive, speed]);
+
+  // Definir los colores según el tema
+  const textColor = theme === "dark" ? "#fafafa" : "#333"; // Cambia los colores según el tema
 
   return (
     <p
@@ -53,7 +55,7 @@ const TypedName: React.FC<TypedNameProps> = ({
         padding: "20px",
         marginBottom: "10px",
         textAlign: "center",
-        color: "#fafafa",
+        color: textColor, // Usa el color basado en el tema
       }}
     ></p>
   );

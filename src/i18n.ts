@@ -12,7 +12,8 @@ i18n.use(initReactI18next).init({
         download: "Download",
         aboutMeText: "I am a web developer with two years of experience in frontend using React, Node, and TypeScript. I enjoy creative challenges and team collaboration using Scrum methodologies. Currently, I work in the Comex area of Banco Galicia, participating in various projects.",
         universe: 'Universe',
-        about: 'About'
+        about: 'About',
+        change: 'changes to dark',
       }
     },
     es: {
@@ -24,7 +25,8 @@ i18n.use(initReactI18next).init({
         download: "Descargar",
         aboutMeText: "Soy desarrollador web con dos años de experiencia en frontend utilizando React, Node y TypeScript. Disfruto de los desafíos creativos y la colaboración en equipo con metodologías Scrum. Actualmente, trabajo en el área de Comex del Banco Galicia, participando en diversos proyectos.",
         universe: 'Universo',
-        about: 'Sobre mi'
+        about: 'Sobre mi',
+        change: 'Cambia a dark',
       }
     }
   },

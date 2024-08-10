@@ -7,10 +7,11 @@ import MyContext from "../../context/Context";
 import { useTranslation } from 'react-i18next';
 
 // Contenedor principal
-const AboutContainer = styled.section`
+const AboutContainer = styled.section<{ theme: any }>`
   display: flex;
   justify-content: center;
   padding: 20px;
+  background: ${({ theme }) => theme.background};  // Cambio según el tema
 
   @media (max-width: 768px) {
     padding: 15px;
@@ -46,7 +47,7 @@ const borderAnimation = keyframes`
 `;
 
 // Estilo del Card
-const Card = styled.div`
+const Card = styled.div<{ theme: any }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,6 +60,7 @@ const Card = styled.div`
   animation: ${borderAnimation} 3s linear infinite;
   transition: transform 0.3s, box-shadow 0.3s;
   flex-direction: column;
+  color: ${({ theme }) => theme.color};  // Cambio según el tema
 
   // Media queries para ajustar el tamaño del Card en dispositivos más pequeños
   @media (max-width: 768px) {
@@ -142,7 +144,7 @@ const StyledTypedName = styled(TypedName)``;
 
 const About = () => {
   const { t } = useTranslation();
-  const { language } = useContext(MyContext) || {};
+  const { language, theme } = useContext(MyContext) || {};
   const [txt, setTxt] = useState<string[]>([]);
 
   useEffect(() => {
@@ -150,8 +152,8 @@ const About = () => {
   }, [language, t]);
 
   return (
-    <AboutContainer>
-      <Card>
+    <AboutContainer theme={theme}>
+      <Card theme={theme}>
         <ColumnDiv>
           <TextDiv>
             <NameContainer>
@@ -175,3 +177,4 @@ const About = () => {
 };
 
 export default About;
+
