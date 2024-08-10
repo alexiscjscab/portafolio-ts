@@ -25,7 +25,7 @@ const TypedName: React.FC<TypedNameProps> = ({
       const typedOptions = {
         strings: texto,
         typeSpeed: speed,
-        loop: true,
+        loop: false,
         startDelay: 250,
         showCursor: false,
         smartBackspace: true,
