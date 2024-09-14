@@ -1,5 +1,6 @@
 import React, { useRef, useMemo } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Text } from "@react-three/drei";
 import * as THREE from "three";
 import luna from "../../assets/planets/luna.jpg";
 
@@ -17,6 +18,8 @@ interface PlanetProps {
   ringTexture?: THREE.Texture;
   ringSize?: number;
   hasMoon?: boolean;
+  planetName?: string; // Nueva propiedad para el nombre del planeta
+  moonName?: string;   // Nueva propiedad para el nombre de la luna
 }
 
 export const Planet: React.FC<PlanetProps> = ({
@@ -31,26 +34,44 @@ export const Planet: React.FC<PlanetProps> = ({
   ringTexture,
   ringSize = 1.5,
   hasMoon = false,
+  planetName = "Planet", // Valor predeterminado para el nombre del planeta
+  moonName = "Moon",     // Valor predeterminado para el nombre de la luna
 }) => {
   const planetRef = useRef<THREE.Mesh>(null);
   const moonRef = useRef<THREE.Mesh>(null);
+  const planetTextRef = useRef<THREE.Mesh>(null); // Referencia para el texto del planeta
+  const moonTextRef = useRef<THREE.Mesh>(null);   // Referencia para el texto de la luna
+
+  // Acceso a la cámara desde el contexto de three.js
+  const { camera } = useThree();
 
   useFrame(({ clock }) => {
     const elapsedTime = clock.getElapsedTime();
+    const planetPositionX = distance * Math.cos(elapsedTime * speed);
+    const planetPositionZ = distance * Math.sin(elapsedTime * speed);
+
     if (planetRef.current) {
-      planetRef.current.position.set(
-        distance * Math.cos(elapsedTime * speed),
-        0,
-        distance * Math.sin(elapsedTime * speed)
-      );
+      planetRef.current.position.set(planetPositionX, 0, planetPositionZ);
       planetRef.current.rotation.y += 0.01;
     }
+
     if (hasMoon && moonRef.current) {
-      moonRef.current.position.set(
-        distance * Math.cos(elapsedTime * speed * 2) * size * 2,
-        0,
-        distance * Math.sin(elapsedTime * speed * 2) * size * 2
-      );
+      const moonPositionX = planetPositionX + size * 2 * Math.cos(elapsedTime * speed * 2);
+      const moonPositionZ = planetPositionZ + size * 2 * Math.sin(elapsedTime * speed * 2);
+
+      moonRef.current.position.set(moonPositionX, 0, moonPositionZ);
+
+      // Posicionar el texto sobre la luna
+      if (moonTextRef.current) {
+        moonTextRef.current.position.set(moonPositionX, size * 0.2 + 0.5, moonPositionZ);
+        moonTextRef.current.lookAt(camera.position); // Hacer que el texto de la luna mire a la cámara
+      }
+    }
+
+    // Posicionar el texto sobre el planeta
+    if (planetTextRef.current) {
+      planetTextRef.current.position.set(planetPositionX, size + 0.5, planetPositionZ);
+      planetTextRef.current.lookAt(camera.position); // Hacer que el texto del planeta mire a la cámara
     }
   });
 
@@ -89,11 +110,33 @@ export const Planet: React.FC<PlanetProps> = ({
         )}
       </mesh>
       {hasMoon && (
-        <mesh ref={moonRef}>
-          <sphereGeometry args={[size * 0.2, 32, 32]} />
-          <meshStandardMaterial map={textureLuna} />
-        </mesh>
+        <>
+          <mesh ref={moonRef}>
+            <sphereGeometry args={[size * 0.2, 32, 32]} />
+            <meshStandardMaterial map={textureLuna} />
+          </mesh>
+          {/* Texto sobre la Luna */}
+          <Text
+            ref={moonTextRef}
+            fontSize={size * 0.2} // Tamaño del texto relativo al tamaño de la luna
+            color="white" // Color del texto
+            anchorX="center"
+            anchorY="middle"
+          >
+            {moonName}
+          </Text>
+        </>
       )}
+      {/* Texto sobre el planeta */}
+      <Text
+        ref={planetTextRef}
+        fontSize={size * 0.5} // Tamaño del texto relativo al tamaño del planeta
+        color="white" // Color del texto
+        anchorX="center"
+        anchorY="middle"
+      >
+        {planetName}
+      </Text>
     </group>
   );
 };

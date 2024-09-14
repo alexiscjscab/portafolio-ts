@@ -1,23 +1,23 @@
-import React from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
-import * as THREE from "three";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
-import { Planet } from "./Planet";
-import { Sun } from "./Sun";
-import { Orbit } from "./Orbit";
-import { Comet } from "./Comet";
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Stars } from '@react-three/drei';
+import * as THREE from 'three';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
+import { Planet } from './Planet';
+import { Sun } from './Sun';
+import { Orbit } from './Orbit';
+import { Comet } from './Comet';
 
 // Importación de las texturas
-import mercurio from "../../assets/planets/mercurio.jpg";
-import venus from "../../assets/planets/venus.jpg";
-import tierra from "../../assets/planets/tierra.jpg";
-import marte from "../../assets/planets/marte.jpg";
-import jupiter from "../../assets/planets/jupiter.jpg";
-import urano from "../../assets/planets/urano.jpg";
-import neptuno from "../../assets/planets/neptuno.jpg";
-import saturno from "../../assets/planets/saturnmap.jpg";
+import mercurio from '../../assets/planets/mercurio.jpg';
+import venus from '../../assets/planets/venus.jpg';
+import tierra from '../../assets/planets/tierra.jpg';
+import marte from '../../assets/planets/marte.jpg';
+import jupiter from '../../assets/planets/jupiter.jpg';
+import urano from '../../assets/planets/urano.jpg';
+import neptuno from '../../assets/planets/neptuno.jpg';
+import saturno from '../../assets/planets/saturnmap.jpg';
 
 // Definición de las rutas de las texturas
 const planetTextures: { [key: string]: string } = {
@@ -56,22 +56,48 @@ type PlanetConfig = {
   hasMoon?: boolean;
   hasRings?: boolean;
   ringTexture?: THREE.Texture;
+  planetName: string;
 };
 
 const planetsConfig: PlanetConfig[] = [
-  { texture: textures.mercurio, size: 0.4, distance: 7, speed: 0.2 },
-  { texture: textures.venus, size: 0.9, distance: 10, speed: 0.12 },
+  {
+    texture: textures.mercurio,
+    size: 0.4,
+    distance: 7,
+    speed: 0.2,
+    planetName: 'Mercurio',
+  },
+  {
+    texture: textures.venus,
+    size: 0.9,
+    distance: 10,
+    speed: 0.12,
+    planetName: 'Venus',
+  },
   {
     texture: textures.tierra,
     size: 1.2,
     distance: 15,
     speed: 0.1,
-    emissive: "blue",
+    emissive: 'blue',
     emissiveIntensity: 0.1,
     hasMoon: true,
+    planetName: 'Tierra',
   },
-  { texture: textures.marte, size: 0.6, distance: 20, speed: 0.08 },
-  { texture: textures.jupiter, size: 1.5, distance: 25, speed: 0.06 },
+  {
+    texture: textures.marte,
+    size: 0.6,
+    distance: 20,
+    speed: 0.08,
+    planetName: 'Marte',
+  },
+  {
+    texture: textures.jupiter,
+    size: 1.5,
+    distance: 25,
+    speed: 0.06,
+    planetName: 'Jupiter',
+  },
   {
     texture: textures.saturno,
     size: 1.3,
@@ -79,19 +105,39 @@ const planetsConfig: PlanetConfig[] = [
     speed: 0.05,
     hasRings: true,
     ringTexture: textures.saturno,
+    planetName: 'Saturno',
   },
-  { texture: textures.urano, size: 1.1, distance: 35, speed: 0.04 },
-  { texture: textures.neptuno, size: 1.1, distance: 40, speed: 0.03 },
+  {
+    texture: textures.urano,
+    size: 1.1,
+    distance: 35,
+    speed: 0.04,
+    planetName: 'Urano',
+  },
+  {
+    texture: textures.neptuno,
+    size: 1.1,
+    distance: 40,
+    speed: 0.03,
+    planetName: 'Neptuno',
+  },
 ];
 
 const StarryBackground: React.FC = () => {
   return (
-    <Canvas style={{ width: "100vw", height: "100vh" }}>
+    <Canvas style={{ width: '100vw', height: '100vh' }}>
       <ambientLight intensity={0.2} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <pointLight position={[10, 10, 10]} intensity={0.9} />
 
-      <Stars radius={200} count={50000} factor={4} saturation={0.5} fade speed={1} />
+      <Stars
+        radius={200}
+        count={50000}
+        factor={4}
+        saturation={0.5}
+        fade
+        speed={1}
+      />
 
       <Sun />
       {[7, 10, 15, 20, 25, 30, 35, 40].map((radius) => (
@@ -105,7 +151,7 @@ const StarryBackground: React.FC = () => {
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={1} />
 
-      {Array.from({ length: 4 }).map((_, index) => (
+      {Array.from({ length: 10 }).map((_, index) => (
         <Comet key={index} />
       ))}
 
