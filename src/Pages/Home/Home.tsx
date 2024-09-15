@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import styled, { ThemeProvider, keyframes } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { FaGlobe, FaSun, FaMoon } from "react-icons/fa";
 import Universe from "../Universe/Universe";
 import MyContext from "../../context/Context";
@@ -24,27 +24,25 @@ const lightTheme = {
   hoverColor: "#007bff",
 };
 
-const HomeContainer = styled.div<{ theme: any }>`
+const HomeContainer = styled.div<{ theme: typeof darkTheme | typeof lightTheme }>`
   min-width: 100vw;
   min-height: 100vh;
   background: ${({ theme }) => theme.background};
+  padding: 10px;
+  box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media (min-width: 481px) {
     padding: 15px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 10px;
   }
 `;
 
-const Navbar = styled.nav<{ theme: any }>`
+const Navbar = styled.nav<{ theme: typeof darkTheme | typeof lightTheme }>`
   display: flex;
   align-items: center;
   background: ${({ theme }) => theme.navBackground};
-  top: 0;
   padding: 0.5rem;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const NavItems = styled.div`
@@ -52,18 +50,17 @@ const NavItems = styled.div`
   flex: 1;
 `;
 
-const NavItem = styled.button<{ active?: boolean; theme: any }>`
+const NavItem = styled.button<{ active?: boolean; theme: typeof darkTheme | typeof lightTheme }>`
   background: none;
   border: none;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   cursor: pointer;
   color: ${({ active, theme }) => (active ? theme.hoverColor : theme.color)};
-  border-bottom: ${({ active, theme }) =>
-    active ? `3px solid ${theme.hoverColor}` : "none"};
+  border-bottom: ${({ active, theme }) => active ? `3px solid ${theme.hoverColor}` : "none"};
   transition: color 0.3s, border-bottom 0.3s;
   outline: none;
-  font-family: pirate;
+  font-family: 'Pirate', sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
 
@@ -72,11 +69,7 @@ const NavItem = styled.button<{ active?: boolean; theme: any }>`
   }
 `;
 
-export const ThemeToggleButton = styled.button<{
-  theme: any;
-  tieneMargin?: any;
-  esRotativo?: boolean;
-}>`
+export const ThemeToggleButton = styled.button<{ theme: typeof darkTheme | typeof lightTheme; tieneMargin?: boolean }>`
   background: none;
   border: none;
   color: ${({ theme }) => theme.color};
@@ -84,13 +77,14 @@ export const ThemeToggleButton = styled.button<{
   cursor: pointer;
   transition: color 0.3s;
   outline: none;
-  margin-right: ${({ tieneMargin }) => (tieneMargin ? "1rem" : "0px")};
+  margin-right: ${({ tieneMargin }) => (tieneMargin ? "1rem" : "0")};
 
   &:hover {
     color: ${({ theme }) => theme.hoverColor};
   }
 `;
-const LanguageSwitcher = styled.button<{ theme: any }>`
+
+const LanguageSwitcher = styled.button<{ theme: typeof darkTheme | typeof lightTheme }>`
   background: none;
   border: none;
   color: ${({ theme }) => theme.color};
@@ -105,14 +99,20 @@ const LanguageSwitcher = styled.button<{ theme: any }>`
   }
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  margin-top: 1rem;
+`;
 
 type PagesProps = "About" | "Universe";
 
+const navItems = [
+  { id: "About", label: "about" },
+  { id: "Universe", label: "universe" },
+];
+
 const Home: React.FC<HomeProps> = () => {
   const [pages, setPages] = useState<PagesProps>("About");
-  const { language, changeLanguage, theme, toggleTheme } =
-    useContext(MyContext) || {};
+  const { language, changeLanguage, theme } = useContext(MyContext) || {};
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -121,30 +121,26 @@ const Home: React.FC<HomeProps> = () => {
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <HomeContainer>
-        <Navbar>
+      <HomeContainer theme={theme === "dark" ? darkTheme : lightTheme}>
+        <Navbar theme={theme === "dark" ? darkTheme : lightTheme}>
           <NavItems>
-            <NavItem
-              active={pages === "About"}
-              onClick={() => setPages("About")}
-            >
-              {t("about")}
-            </NavItem>
-            <NavItem
-              active={pages === "Universe"}
-              onClick={() => setPages("Universe")}
-            >
-              {t("universe")}
-            </NavItem>
+            {navItems.map(({ id, label }) => (
+              <NavItem
+                key={id}
+                active={pages === id}
+                onClick={() => setPages(id as PagesProps)}
+                theme={theme === "dark" ? darkTheme : lightTheme}
+              >
+                {t(label)}
+              </NavItem>
+            ))}
           </NavItems>
-          <ThemeToggleButton onClick={toggleTheme} tieneMargin={true}>
+          <ThemeToggleButton theme={theme === "dark" ? darkTheme : lightTheme} tieneMargin>
             {theme === "dark" ? <FaSun /> : <FaMoon />}
           </ThemeToggleButton>
-          <LanguageSwitcher
-            onClick={() =>
-              changeLanguage && changeLanguage(language === "en" ? "es" : "en")
-            }
-          >
+          <LanguageSwitcher theme={theme === "dark" ? darkTheme : lightTheme} onClick={() =>
+            changeLanguage && changeLanguage(language === "en" ? "es" : "en")
+          }>
             {language} <FaGlobe />
           </LanguageSwitcher>
         </Navbar>
