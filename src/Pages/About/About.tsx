@@ -1,17 +1,29 @@
-import styled, { keyframes } from "styled-components";
-import TypedName from "./NameAnimated";
-import { TextAboutMe } from "./TextAbout";
-import { useContext, useEffect, useState } from "react";
-import IconButton from "../../components/Buttons/IconButton";
-import MyContext from "../../context/Context";
+import { useContext, useEffect, useState } from 'react';
+import styled, { keyframes, DefaultTheme } from 'styled-components';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import MyContext from '../../context/Context';
+import IconButton from '../../components/Buttons/IconButton';
+import TypedName from '../../components/NameAnimated';
+import { TextAboutMe } from '../../components/TextAbout';
+
+// Define tus temas
+const darkTheme: DefaultTheme = {
+  background: '#333',
+  color: '#fff',
+};
+
+const lightTheme: DefaultTheme = {
+  background: '#fff',
+  color: '#000',
+};
 
 // Contenedor principal
-const AboutContainer = styled.section<{ theme: any }>`
+const AboutContainer = styled.section<{ theme: DefaultTheme }>`
   display: flex;
   justify-content: center;
   padding: 20px;
-  background: ${({ theme }) => theme.background};  // Cambio según el tema
+  background: ${({ theme }) => theme.background}; // Cambio según el tema
 
   @media (max-width: 768px) {
     padding: 15px;
@@ -47,7 +59,7 @@ const borderAnimation = keyframes`
 `;
 
 // Estilo del Card
-const Card = styled.div<{ theme: any }>`
+const Card = styled.div<{ theme: DefaultTheme }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,7 +72,7 @@ const Card = styled.div<{ theme: any }>`
   animation: ${borderAnimation} 3s linear infinite;
   transition: transform 0.3s, box-shadow 0.3s;
   flex-direction: column;
-  color: ${({ theme }) => theme.color};  // Cambio según el tema
+  color: ${({ theme }) => theme.color}; // Cambio según el tema
 
   // Media queries para ajustar el tamaño del Card en dispositivos más pequeños
   @media (max-width: 768px) {
@@ -120,7 +132,7 @@ const NameContainer = styled.div`
   height: 50px;
   margin-bottom: 1rem;
   font-size: 40px;
- 
+
   // Ajusta el tamaño del texto en pantallas más pequeñas
   @media (max-width: 768px) {
     font-size: 30px;
@@ -140,27 +152,55 @@ const CenteredDiv = styled.div`
   margin-top: 1rem;
 `;
 
+const SocialIcons = styled.div<{ theme: DefaultTheme }>`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+
+  a {
+    color: ${({ theme }) => theme.color};
+    font-size: 24px;
+    transition: color 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      color: #00cfff; /* Celeste para hover */
+      filter: drop-shadow(0 0 10px #00cfff) brightness(1.2);
+      transform: scale(1.1); /* Expande el ícono al hacer hover */
+    }
+  }
+`;
+
 const StyledTypedName = styled(TypedName)``;
 
 const About = () => {
   const { t } = useTranslation();
-  const { language, theme } = useContext(MyContext) || {};
+  const { language, theme: contextTheme } = useContext(MyContext) || {};
   const [txt, setTxt] = useState<string[]>([]);
+  const [currentTheme, setCurrentTheme] = useState<DefaultTheme>(lightTheme);
 
   useEffect(() => {
     setTxt([t('frontDeveloper'), t('alexisBeas')]);
-  }, [language, t]);
+
+    // Mapear el tema del contexto a DefaultTheme
+    const themeMap: Record<string, DefaultTheme> = {
+      dark: darkTheme,
+      light: lightTheme,
+    };
+
+    setCurrentTheme(themeMap[contextTheme || 'dark'] || lightTheme);
+  }, [language, t, contextTheme]);
 
   return (
-    <AboutContainer theme={theme}>
-      <Card theme={theme}>
+    <AboutContainer theme={currentTheme}>
+      <Card theme={currentTheme}>
         <ColumnDiv>
           <TextDiv>
             <NameContainer>
               <StyledTypedName
                 texto={txt}
                 speed={100}
-                size={"18px"}
+                size={'18px'}
                 setActive={() => {}}
                 active={false}
               />
@@ -170,6 +210,22 @@ const About = () => {
           <CenteredDiv>
             <IconButton onClick={() => {}} text={t('download')} />
           </CenteredDiv>
+          <SocialIcons theme={currentTheme}>
+            <a
+              href='https://github.com/alexiscjscab'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <FaGithub />
+            </a>
+            <a
+              href='https://ar.linkedin.com/in/alexis-beas-dev'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <FaLinkedin />
+            </a>
+          </SocialIcons>
         </ColumnDiv>
       </Card>
     </AboutContainer>
@@ -177,4 +233,3 @@ const About = () => {
 };
 
 export default About;
-

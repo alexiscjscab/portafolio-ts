@@ -4,7 +4,7 @@ import StarryBackground from "../../components/SistemaSolar/Universe";
 import { ThemeToggleButton } from "../Home/Home";
 import styled from "styled-components";
 import { FaMoon } from "react-icons/fa";
-import { TextAbout } from "../About/TextAbout";
+import { TextAbout } from "../../components/TextAbout";
 import { useTranslation } from "react-i18next";
 
 const Universe = () => {

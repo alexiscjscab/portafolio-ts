@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useContext } from "react";
 import Typed from "typed.js";
-import MyContext from "../../context/Context"; // Asegúrate de importar tu contexto
+import MyContext from '../context/Context';
 
 interface TypedNameProps {
   texto: string[];

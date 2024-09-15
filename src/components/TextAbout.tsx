@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import MyContext from "../../context/Context";
+import MyContext from "../context/Context";
 import styled from "styled-components";
 
 export const TextAbout = styled.div<{ textColor?: string, margin?: boolean }>`

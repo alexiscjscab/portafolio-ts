@@ -1,22 +1,19 @@
-import React, { useRef, useMemo } from "react";
-import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
-import meteorito from "../../assets/planets/meteorito.jpg";
-
+import React, { useRef, useMemo } from 'react';
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
+import meteorito from '../../assets/planets/meteorito.jpg';
 
 const textureMeteorito = new THREE.TextureLoader().load(meteorito);
 
-
 const getRandom = (min: number, max: number) =>
   Math.random() * (max - min) + min;
-
 
 export const Comet: React.FC = () => {
   const cometRef = useRef<THREE.Mesh>(null);
   const size = useMemo(() => getRandom(0.1, 1), []);
   const speed = useMemo(() => getRandom(0.5, 2), []);
   const position = useMemo<[number, number, number]>(
-    () => [getRandom(-40, 40), getRandom(-40, 40), getRandom(-40, 40),],
+    () => [getRandom(-40, 40), getRandom(-40, 40), getRandom(-40, 40)],
     []
   );
 
@@ -33,9 +30,9 @@ export const Comet: React.FC = () => {
   const material = useMemo(
     () =>
       new THREE.MeshStandardMaterial({
-        color: "rgba(100,50,100,0.5)",
+        // color: 'rgba(100,50,100,0.5)',
         map: textureMeteorito,
-        emissive: new THREE.Color("brown"),
+        emissive: new THREE.Color('brown'),
         emissiveIntensity: 1.2,
         metalness: 0.8,
         roughness: 0.5,
@@ -44,8 +41,11 @@ export const Comet: React.FC = () => {
   );
 
   return (
-    <mesh ref={cometRef} position={position} material={material}>
-      <sphereGeometry args={[size, 80, 80]} />
-    </mesh>
+    <>
+      <mesh ref={cometRef} position={position} material={material}>
+        <sphereGeometry args={[size, 80, 80]} />
+      </mesh>
+      {/* Sistema de partículas */}
+    </>
   );
 };

@@ -151,7 +151,7 @@ const StarryBackground: React.FC = () => {
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={1} />
 
-      {Array.from({ length: 10 }).map((_, index) => (
+      {Array.from({ length: 30 }).map((_, index) => (
         <Comet key={index} />
       ))}
 
@@ -161,7 +161,7 @@ const StarryBackground: React.FC = () => {
           intensity={1.5}
           width={300}
           height={300}
-          kernelSize={3}
+          kernelSize={2}
           luminanceThreshold={0.2}
           luminanceSmoothing={0.9}
         />
