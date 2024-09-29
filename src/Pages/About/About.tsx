@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import styled, { keyframes, DefaultTheme } from 'styled-components';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
-import MyContext from '../../context/Context';
 import IconButton from '../../components/Buttons/IconButton';
-import TypedName from '../../components/NameAnimated';
-import { TextAboutMe } from '../../components/TextAbout';
+import { TextAboutMe } from '../../components/Text/TextAbout';
+import TypedName from '../../components/Text/NameAnimated';
+import MyContext from '../../Context/Context';
 
 // Define tus temas
 const darkTheme: DefaultTheme = {

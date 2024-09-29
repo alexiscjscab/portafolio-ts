@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useContext } from "react";
-import Typed from "typed.js";
-import MyContext from '../context/Context';
+import React, { useEffect, useRef, useContext } from 'react';
+import Typed from 'typed.js';
+import MyContext from '../../Context/Context';
 
 interface TypedNameProps {
   texto: string[];
@@ -17,7 +17,7 @@ const TypedName: React.FC<TypedNameProps> = ({
   setActive,
   active,
 }) => {
-  const {theme} = useContext(MyContext) || {}
+  const { theme } = useContext(MyContext) || {};
   const typedRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const TypedName: React.FC<TypedNameProps> = ({
         smartBackspace: true,
         backSpeed: 50,
         fadeOut: true,
-        fadeOutClass: "typed-fade-out",
+        fadeOutClass: 'typed-fade-out',
         fadeOutDelay: 500,
         onComplete: () => setActive(true),
       };
@@ -45,16 +45,16 @@ const TypedName: React.FC<TypedNameProps> = ({
   }, [texto, active, setActive, speed]);
 
   // Definir los colores según el tema
-  const textColor = theme === "dark" ? "#fafafa" : "#333"; // Cambia los colores según el tema
+  const textColor = theme === 'dark' ? '#fafafa' : '#333'; // Cambia los colores según el tema
 
   return (
     <p
       ref={typedRef}
       style={{
         fontSize: size,
-        padding: "20px",
-        marginBottom: "10px",
-        textAlign: "center",
+        padding: '20px',
+        marginBottom: '10px',
+        textAlign: 'center',
         color: textColor, // Usa el color basado en el tema
       }}
     ></p>

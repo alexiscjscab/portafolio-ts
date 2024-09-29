@@ -1,4 +1,4 @@
-import MyProvider from "./context/Provider";
+import MyProvider from './Context/Provider';
 import Home from "./Pages/Home/Home";
 
 function App() {

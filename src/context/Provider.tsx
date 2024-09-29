@@ -1,6 +1,6 @@
 import { useState, ReactNode } from 'react';
-import MyContext from './Context';
 import { useTranslation } from 'react-i18next';
+import MyContext from './Context';
 
 interface MyProviderProps {
   children: ReactNode;
